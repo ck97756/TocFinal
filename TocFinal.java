@@ -17,7 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public class Proj {
+public class TocFinal{
 
 	public static void main(String[] args)throws Exception {
 		PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
