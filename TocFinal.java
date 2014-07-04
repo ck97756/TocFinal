@@ -2,6 +2,8 @@
 //黃均暉
 //TOC Project
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
@@ -15,7 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public class Proj {
+public class TocFinal {
 
 	public static void main(String[] args)throws Exception {
 		PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
@@ -32,15 +34,34 @@ public class Proj {
 		JSONObject json;
 		ArrayList<ArrayList<String>> data;
 		ArrayList<ArrayList<ArrayList<Integer>>> value;
-		
+		String[] keys=null;
 		
 		try {
-			input=getJSONFromURL(args[0]);
+			URL website = new URL(args[0]);
+	        BufferedReader in = new BufferedReader(new InputStreamReader(website.openStream()));
+	        String inputLine;
+	        while ((inputLine = in.readLine()) != null&&inputLine.length()<5);
+	        json=new JSONObject(inputLine);
+	        keys=JSONObject.getNames(json);
+	        int[] keyOrder=new int[keys.length];
+	        for(int a=0;a<keys.length;a++){
+	        	keyOrder[a]=inputLine.indexOf(keys[a]);
+	        }
+	        for (int i = keys.length-1; i > 0; --i){
+	            for (int j = 0; j < i; ++j){
+	                if (keyOrder[j] > keyOrder[j+1]){
+	                    int tmpint=keyOrder[j];
+	                    keyOrder[j]=keyOrder[j+1];
+	                    keyOrder[j+1]=tmpint;
+	                    String tmpString=keys[j];
+	                    keys[j]=keys[j+1];
+	                    keys[j+1]=tmpString;
+	                }
+	            }
+			}
+			input=new JSONArray(new JSONTokener(website.openStream()));
 		} catch (Exception e) {
 		}
-		
-		json=new JSONObject(new JSONTokener(input.get(0).toString()));
-		String[] keys=JSONObject.getNames(json);
 		
 		String temp;
 		int tempIndex;
@@ -436,17 +457,5 @@ public class Proj {
 			System.out.println("done");
 		}
 		System.out.println("End");
-	}
-	
-	public static JSONArray getJSONFromURL(String url) throws Exception{
-		URL website = new URL(url);
-        URLConnection connection = website.openConnection();
-		JSONArray json=new JSONArray(new JSONTokener(connection.getInputStream()));
-		return json;
-    }
-	
-	public static int indexOf(String pattern, String s) {
-	    Matcher matcher = Pattern.compile(pattern).matcher(s);
-	    return matcher.find() ? matcher.start() : -1;
 	}
 }
