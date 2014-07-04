@@ -17,7 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-public class TocFinal {
+public class Proj {
 
 	public static void main(String[] args)throws Exception {
 		PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
@@ -364,7 +364,14 @@ public class TocFinal {
 							for(int e=0;e<l4.get(a).get(b).get(c).get(d).length;e++){
 								for(int f=0;f<l4.get(a).get(b).get(c).get(d)[e].length;f++){
 									for(int g=0;g<l4.get(a).get(b).get(c).get(d)[e][f].length;g++){
-										len+=l4.get(a).get(b).get(c).get(d)[e][f][g].length;
+										for(int h=0;h<l4.get(a).get(b).get(c).get(d)[e][f][g].length;h++){
+											if(l4.get(a).get(b).get(c).get(d)[e][f][g][h]==null||l4.get(a).get(b).get(c).get(d)[e][f][g][h]==0){
+												continue;
+											}else{
+												len++;
+											}
+										}
+										
 									}
 								}
 							}
@@ -392,8 +399,8 @@ public class TocFinal {
 								for(int f=0;f<l4.get(a).get(b).get(c).get(d)[e].length;f++){
 									for(int g=0;g<l4.get(a).get(b).get(c).get(d)[e][f].length;g++){
 										for(int h=0;h<l4.get(a).get(b).get(c).get(d)[e][f][g].length;h++){
-											if(l4.get(a).get(b).get(c).get(d)[e][f][g][h]==null){
-												l4val[head]=0;
+											if(l4.get(a).get(b).get(c).get(d)[e][f][g][h]==null||l4.get(a).get(b).get(c).get(d)[e][f][g][h]==0){
+												continue;
 											}else{
 												l4val[head]=l4.get(a).get(b).get(c).get(d)[e][f][g][h];
 											}
